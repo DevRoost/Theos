@@ -6,11 +6,11 @@
  |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
                                                                                                                                                                                                                                                                                                                                        
 =========================================================
-* Horizon UI - v1.1.0
+* Theos - v1.1.0
 =========================================================
 
 * Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
+* Copyright 2023 Theos (https://www.horizon-ui.com/)
 
 * Designed and Coded by Simmmple
 
