@@ -43,7 +43,7 @@ export default function Marketplace({ showSidebar, appList, menuSelected }) {
           sm: "repeat(auto-fit, minmax(200px, 1fr))",
           md: "repeat(auto-fit, minmax(250px, 1fr))",
           xl: "repeat(auto-fit, minmax(300px, 1fr))",
-          "2xl": "repeat(auto-fit, minmax(max-content, 1fr))",
+          // "2xl": "repeat(auto-fit, minmax(max-content, 1fr))",
          
         };
       default:
