@@ -11,9 +11,10 @@ import {
 import MarketplaceCard from "components/card/MarketplaceCard";
 import Sidebar from "components/sidebar/Sidebar";
 
+export default function Marketplace({ showSidebar, appList, menuSelected }) {
+  console.log("showSidebar", showSidebar, appList);
 
-export default function Marketplace({showSidebar,appList,menuSelected}) {
-  console.log("showSidebar",showSidebar )
+  // Set active section as the first category by default when the sidebar is shown
   const [activeSection, setActiveSection] = useState(appList[0]?.categoryName || "Conversational AI");
   const [openSubmenu, setOpenSubmenu] = useState({});
 
@@ -24,27 +25,31 @@ export default function Marketplace({showSidebar,appList,menuSelected}) {
 
   // Render the cards of the active section
   const renderCards = () => {
-    if(!showSidebar){
+    if (!showSidebar) {
       return appList || [];
     }
-    console.log("appList",appList,activeSection )
+
+    console.log("appList", appList, activeSection);
+
     const section = appList?.find((app) => app.categoryName === activeSection);
     return section?.cards || [];
   };
 
   const getGridTemplateColumns = () => {
-    switch(menuSelected) {
-     
-      case 'In-Apps':
-        return {
-          base: "repeat(1, 1fr)"
-        };
-      default:
+    console.log("menuSelected,",menuSelected)
+    switch (menuSelected.name) {
+      case 'Plato Apps':
         return {
           sm: "repeat(auto-fit, minmax(200px, 1fr))",
           md: "repeat(auto-fit, minmax(250px, 1fr))",
           xl: "repeat(auto-fit, minmax(300px, 1fr))",
           "2xl": "repeat(auto-fit, minmax(max-content, 1fr))",
+         
+        };
+      default:
+        return {
+          base: "repeat(1, 1fr)",
+        
         };
     }
   };
@@ -54,16 +59,15 @@ export default function Marketplace({showSidebar,appList,menuSelected}) {
     const cards = renderCards();
     if (cards.length > 0) {
       return (
-       
         <SimpleGrid
           gridTemplateColumns={getGridTemplateColumns()}
           spacing="20px"
         >
           {cards.map((apps, index) => (
-            <MarketplaceCard key={index} 
-            data={apps}
-            menuSelected={menuSelected}
-             />
+            <MarketplaceCard key={index}
+              data={apps}
+              menuSelected={menuSelected}
+            />
           ))}
         </SimpleGrid>
       );
@@ -73,17 +77,24 @@ export default function Marketplace({showSidebar,appList,menuSelected}) {
     return <Text>{section?.content || "No content available."}</Text>;
   };
 
+  // Update active section when appList changes or when showSidebar changes
+  useEffect(() => {
+    if (showSidebar && appList.length > 0) {
+      setActiveSection(appList[0]?.categoryName);
+    }
+  }, [showSidebar, appList]);
+
   return (
     <Box display="flex">
       {showSidebar && (
-        <Box width="max-content"  borderRight="1px solid gray">
-          <VStack align="start" >
+        <Box width="max-content" borderRight="1px solid gray">
+          <VStack align="start">
             {appList?.map((section) => (
               <Box key={section.categoryName} width="100%">
                 <Button
                   width="100%"
-                 justifyContent="flex-start"
-                 borderRadius="0"
+                  justifyContent="flex-start"
+                  borderRadius="0"
                   variant={activeSection === section.categoryName ? "solid" : "ghost"}
                   colorScheme="teal"
                   onClick={() => {
@@ -93,23 +104,6 @@ export default function Marketplace({showSidebar,appList,menuSelected}) {
                 >
                   {section.categoryName}
                 </Button>
-                {/* {section?.submenu && (
-                  <Collapse in={openSubmenu[section.categoryName]} animateOpacity>
-                    <VStack align="start" pl={4} spacing={2}>
-                      {section.submenu.map((sub) => (
-                        <Button
-                          key={sub.categoryName}
-                          variant={activeSection === sub.categoryName ? "solid" : "ghost"}
-                          colorScheme="teal"
-                          size="sm"
-                          onClick={() => setActiveSection(sub.categoryName)}
-                        >
-                          {sub.categoryName}
-                        </Button>
-                      ))}
-                    </VStack>
-                  </Collapse>
-                )} */}
               </Box>
             ))}
           </VStack>

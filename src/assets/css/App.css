@@ -8,3 +8,7 @@ body {
 option {
   color: black;
 }
+
+.slick-prev:before, .slick-next:before {
+  color: black;
+}

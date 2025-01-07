@@ -20,7 +20,8 @@ import React, { useState } from "react";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import Card from "components/card/Card.js";
 import IframeContentLoader from "views/admin/default/components/IframeComponent";
-
+import AppDetailsPage from "views/admin/default/components/AppDetails";
+import DialogComponent from "views/admin/default/components/DialogComponent";
 export default function MarketplaceCard(props) {
   const { image, name, description, useCase, download, currentbid } = props.data;
   const [like, setLike] = useState(false);
@@ -144,21 +145,12 @@ export default function MarketplaceCard(props) {
       </Card>
 
       {/* Modal for iframe */}
-      <Modal isOpen={showWebview} onClose={handleCloseWebView} size="full">
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Flex justify="space-between" alignItems="center">
-              {/* <span>Plato LDX</span> */}
-              {/* <Button onClick={handleCloseWebView}>&times;</Button> */}
-            </Flex>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody p={0} m={0}>
-            <IframeContentLoader />
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+
+      <DialogComponent open={showWebview}  close={handleCloseWebView} header="Detail View" content={<AppDetailsPage
+      appdetails={ props.data}
+       />} />
+
+     
     </>
   );
 }

@@ -10,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 
-
 export default function DialogComponent(props) {
   const [modalSize, setModalSize] = useState("lg"); // Default modal size
   const [isMinimized, setIsMinimized] = useState(false); // Tracks minimized state
@@ -45,53 +44,51 @@ export default function DialogComponent(props) {
 
   return (
     <Modal isOpen={props.open} onClose={closeModal} isCentered={false}>
-     
-   
-        <ModalContent
-          
-          sx={{
-            marginTop: modalSize === "full" ? "0px" : "10%", 
-            height: modalHeight, // Apply dynamic height
-            width: modalWidth,   // Apply dynamic width
-            maxWidth: modalSize === "full" ? "100%" : "60vw", // Ensure it doesn't exceed 100% width
-            transition: "all 0.3s ease-in-out", // Smooth transition for size change
-           maxHeight:"90vh",
-           overflow:"auto"
-          }}
-        >
-          <ModalHeader className="draggable-handle">
-            <Flex justifyContent="space-between" alignItems="center">
-              <span>{props.header}</span>
-              <Box>
-                <Button
-                  size="xs"
-                  onClick={modalSize === "full" ? restoreModal : maximizeModal}
-                  mr={2}
-                  title="Maximize/Restore"
-                  fontSize="lg"
-                >
-                  &#9744;
-                </Button>
-                <Button size="xs" onClick={closeModal} title="Close" fontSize="lg">
-                  &times;
-                </Button>
-              </Box>
-            </Flex>
-          </ModalHeader>
-          
-          {!isMinimized && (
-            <ModalBody
-              sx={{
-                minHeight: "200px", // Set minimum height for content
-                overflowY: "auto",  // Enable auto-scrolling when content overflows
-                maxHeight: "70vh",
-              }}
-            >
-              {props.content}
-            </ModalBody>
-          )}
-        </ModalContent>
-      
+      <ModalContent
+        sx={{
+          marginTop: modalSize === "full" ? "0px" : "10%",
+          height: modalHeight, // Apply dynamic height
+          width: modalWidth,   // Apply dynamic width
+          maxWidth: modalSize === "full" ? "100%" : "60vw", // Ensure it doesn't exceed 100% width
+          transition: "all 0.3s ease-in-out", // Smooth transition for size change
+          maxHeight: "90vh", // Max height of the modal
+          overflow: "visible", // Allow overflow within the modal itself
+        }}
+      >
+        <ModalHeader >
+          <Flex justifyContent="space-between" alignItems="center">
+            <span>{props.header}</span>
+            <Box>
+              <Button
+                size="xs"
+                onClick={modalSize === "full" ? restoreModal : maximizeModal}
+                mr={2}
+                title="Maximize/Restore"
+                fontSize="lg"
+              >
+                &#9744;
+              </Button>
+              <Button size="xs" onClick={closeModal} title="Close" fontSize="lg">
+                &times;
+              </Button>
+            </Box>
+          </Flex>
+        </ModalHeader>
+
+        {!isMinimized && (
+          <ModalBody
+            sx={{
+              minHeight: "200px", // Set minimum height for content
+              overflowY: "auto",  // Enable auto-scrolling when content overflows
+              maxHeight: modalSize === "full" ? "100%" : "70vh",   // Max height for the body when not minimized
+              paddingBottom: "1rem", // Ensure padding at the bottom of content
+              touchAction: "auto", // Enable touch scrolling
+            }}
+          >
+            {props.content}
+          </ModalBody>
+        )}
+      </ModalContent>
     </Modal>
   );
 }
